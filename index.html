@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Radar Persona 360: demo ejecutiva de monitoreo de riesgo crediticio minorista."
+      content="Radar Persona 360: plataforma de monitoreo y decisión para riesgo crediticio de personas."
     />
     <title>Radar Persona 360 | Riesgo Crediticio</title>
     <link rel="stylesheet" href="styles.css" />
@@ -50,16 +50,16 @@
         <div class="sidebar-note">
           <span class="status-dot"></span>
           <div>
-            <strong>Demo ejecutiva</strong>
-            <small>Datos 100% sintéticos</small>
+            <strong id="environmentLabel">Preproducción</strong>
+            <small id="sourceLabel">Carga de referencia controlada</small>
           </div>
         </div>
 
         <div class="profile">
-          <div class="avatar">HQ</div>
+          <div class="avatar">RP</div>
           <div>
-            <strong>Hector Quezada</strong>
-            <small>Candidato · Riesgo Persona</small>
+            <strong>Monitoreo Riesgo Persona</strong>
+            <small>Gestión de portafolio</small>
           </div>
         </div>
       </aside>
@@ -71,6 +71,7 @@
             <h1>Radar Persona 360</h1>
           </div>
           <div class="topbar-actions">
+            <span class="as-of-date" id="asOfDate">Corte: 31 may 2026</span>
             <label class="select-control">
               <span>Escenario</span>
               <select id="scenarioSelect" aria-label="Seleccionar escenario">
@@ -93,8 +94,8 @@
               <h2>La mora está contenida, pero el deterioro temprano se concentra en dos segmentos.</h2>
               <p>
                 Nómina joven y revolventes de alta utilización explican el 61% del incremento
-                proyectado en pérdida esperada. La acción recomendada protege
-                <strong id="heroProtection">RD$184 MM</strong> en exposición.
+                proyectado en pérdida esperada. La acción recomendada prioriza
+                <strong id="heroProtection">RD$184 MM</strong> de exposición.
               </p>
               <div class="hero-actions">
                 <a class="button button-primary" href="#estrategia">Ver plan de acción</a>
@@ -288,27 +289,27 @@
                 <p class="eyebrow">De insight a ejecución</p>
                 <h2>Decisiones recomendadas para los próximos 90 días</h2>
               </div>
-              <span class="decision-value">Impacto protegido estimado: <strong>RD$184 MM</strong></span>
+              <span class="decision-value">Exposición priorizada: <strong>RD$184 MM</strong></span>
             </div>
             <div class="strategy-grid" id="strategyGrid"></div>
           </section>
 
           <section class="closing panel">
             <div>
-              <p class="eyebrow">Propuesta de valor</p>
+              <p class="eyebrow">Modelo operativo</p>
               <h2>Una gestión de riesgo que prioriza antes de restringir.</h2>
-              <p>La solución conecta señales de comportamiento, pérdida esperada y rentabilidad para decidir dónde crecer, dónde intervenir y dónde observar.</p>
+              <p>La plataforma conecta señales de comportamiento, pérdida esperada y rentabilidad con responsables, SLA y resultados para decidir dónde crecer, intervenir u observar.</p>
             </div>
             <div class="closing-metrics">
-              <div><strong>24h</strong><span>actualización objetivo</span></div>
-              <div><strong>90 días</strong><span>piloto a producción</span></div>
-              <div><strong>100%</strong><span>trazabilidad de reglas</span></div>
+              <div><strong>24h</strong><span>frecuencia objetivo</span></div>
+              <div><strong>3 capas</strong><span>datos, decisión y control</span></div>
+              <div><strong>100%</strong><span>reglas versionadas</span></div>
             </div>
           </section>
 
           <footer>
-            <p>Radar Persona 360 · Caso demostrativo con datos sintéticos · No representa información real de ninguna entidad.</p>
-            <p>Diseñado por Hector Quezada · Junio 2026</p>
+            <p>Radar Persona 360 · Producto de gestión de Riesgo Persona · Ambiente de preproducción</p>
+            <p>Clasificación: uso interno · Datos de referencia hasta homologación de fuentes</p>
           </footer>
         </div>
       </main>

@@ -41,7 +41,7 @@ const alerts = [
   {
     level: "Crítica",
     type: "critical",
-    time: "Hace 2h",
+    time: "Corte vigente",
     title: "Utilización revolvente > 85%",
     description: "Crecimiento de 14% en clientes con pago mínimo recurrente.",
     impact: "RD$412 MM",
@@ -52,7 +52,7 @@ const alerts = [
   {
     level: "Crítica",
     type: "critical",
-    time: "Hace 5h",
+    time: "Corte vigente",
     title: "Nómina joven: roll rate al alza",
     description: "El tramo 0-12 meses supera el umbral por tercer corte.",
     impact: "8,420 clientes",
@@ -63,7 +63,7 @@ const alerts = [
   {
     level: "Crítica",
     type: "critical",
-    time: "Ayer",
+    time: "Corte anterior",
     title: "Concentración empleador",
     description: "Tres empleadores superan el límite interno combinado.",
     impact: "RD$286 MM",
@@ -74,7 +74,7 @@ const alerts = [
   {
     level: "Preventiva",
     type: "preventive",
-    time: "Ayer",
+    time: "Corte anterior",
     title: "Menor pago a capital",
     description: "Caída sostenida en amortización de préstamos de consumo.",
     impact: "11,204 clientes",
@@ -85,7 +85,7 @@ const alerts = [
   {
     level: "Preventiva",
     type: "preventive",
-    time: "2 días",
+    time: "Ventana 60d",
     title: "Aumento de consultas externas",
     description: "Se acelera la búsqueda de crédito en clientes prime.",
     impact: "3,116 clientes",
@@ -96,18 +96,18 @@ const alerts = [
   {
     level: "Preventiva",
     type: "preventive",
-    time: "2 días",
+    time: "Corte vigente",
     title: "Cross-sell con margen disponible",
     description: "Clientes nómina estables sin tarjeta presentan alto potencial.",
     impact: "RD$96 MM/año",
-    action: "Piloto preaprobado con límites según capacidad residual.",
+    action: "Activar oferta preaprobada con límites según capacidad residual.",
     owner: "Comercial + Analítica",
     rule: "PD < 2%, antigüedad > 18 meses y capacidad residual > 35%.",
   },
   {
     level: "Preventiva",
     type: "preventive",
-    time: "3 días",
+    time: "Cohorte 6m",
     title: "Refinanciamientos con cura débil",
     description: "Dos cohortes muestran reincidencia superior a lo esperado.",
     impact: "RD$137 MM",
@@ -118,7 +118,7 @@ const alerts = [
   {
     level: "Preventiva",
     type: "preventive",
-    time: "3 días",
+    time: "Corte vigente",
     title: "Subutilización en segmento premium",
     description: "Líneas sanas con baja activación reducen retorno del capital.",
     impact: "+1.1 pp RAROC",
@@ -128,7 +128,7 @@ const alerts = [
   },
 ];
 
-const segments = [
+let segments = [
   { initials: "NP", name: "Nómina Prime", detail: "Relación > 24 meses", exposure: "RD$8.9B", customers: "92,410", delinquency: "1.82%", pd: "1.46%", raroc: "23.8%", signal: "Crecimiento", className: "growth" },
   { initials: "NJ", name: "Nómina Joven", detail: "Relación 0-12 meses", exposure: "RD$4.2B", customers: "71,208", delinquency: "5.76%", pd: "5.18%", raroc: "13.1%", signal: "Vigilancia", className: "watch" },
   { initials: "RV", name: "Revolvente Intensivo", detail: "Utilización > 70%", exposure: "RD$3.6B", customers: "48,905", delinquency: "7.41%", pd: "7.92%", raroc: "11.4%", signal: "Vigilancia", className: "watch" },
@@ -142,30 +142,77 @@ const strategies = [
     status: "Contener",
     title: "Intervención temprana en revolventes",
     text: "Combinar reducción selectiva de líneas, oferta de consolidación y contacto antes del primer atraso.",
-    metricLabel: "Pérdida evitada",
+    metricLabel: "Exposición objetivo",
     metric: "RD$92 MM",
-    timing: "Piloto en 30 días",
+    timing: "Operación controlada",
   },
   {
     status: "Crecer",
     title: "Cross-sell responsable en nómina prime",
     text: "Preaprobar tarjeta o consumo solo donde la capacidad residual y el RAROC superen el hurdle.",
-    metricLabel: "Ingreso incremental",
+    metricLabel: "Oportunidad evaluable",
     metric: "RD$96 MM",
-    timing: "12 meses",
+    timing: "Sujeta a validación",
   },
   {
     status: "Recalibrar",
     title: "Límites de entrada para nómina joven",
     text: "Usar comportamiento de los primeros 90 días para graduar exposición y evitar deterioro de cosechas.",
-    metricLabel: "Mejora mora 30+",
+    metricLabel: "Meta de desempeño",
     metric: "-48 pb",
-    timing: "2 cohortes",
+    timing: "Validar en 2 cohortes",
   },
 ];
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
+
+let stressBaseline = {
+  delinquency: 4.1,
+  expectedLossBn: 1.08,
+  raroc: 18.7,
+};
+
+function formatAsOfDate(value) {
+  const date = new Date(`${value}T00:00:00`);
+  return new Intl.DateTimeFormat("es-DO", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+}
+
+async function loadMonitoringSnapshot() {
+  const response = await fetch("data/monitoring_snapshot.json", { cache: "no-store" });
+  if (!response.ok) throw new Error(`snapshot unavailable: ${response.status}`);
+
+  const snapshot = await response.json();
+  const { metadata, portfolio } = snapshot;
+  segments = snapshot.segments;
+
+  scenarios.base.exposure = portfolio.exposure_display;
+  scenarios.base.delinquency = portfolio.delinquency_display;
+  scenarios.base.expectedLoss = portfolio.expected_loss_display;
+  scenarios.base.raroc = portfolio.raroc_display;
+  scenarios.base.health = portfolio.health_score;
+  scenarios.base.healthDelta = "Baseline del corte";
+
+  stressBaseline = {
+    delinquency: portfolio.weighted_delinquency_30 * 100,
+    expectedLossBn: portfolio.expected_loss_mm / 1000,
+    raroc: portfolio.raroc * 100,
+  };
+
+  $("#environmentLabel").textContent =
+    metadata.environment === "PRODUCTION" ? "Producción" : "Preproducción";
+  $("#sourceLabel").textContent =
+    metadata.source === "REFERENCE_FIXTURE"
+      ? "Carga de referencia controlada"
+      : `Fuente: ${metadata.source}`;
+  $("#asOfDate").textContent = `Corte: ${formatAsOfDate(metadata.as_of_date)}`;
+  $("#asOfDate").title =
+    `Corrida ${metadata.run_id} · Reconciliación ${metadata.reconciliation_status}`;
+}
 
 function renderAlerts() {
   $("#alertList").innerHTML = alerts
@@ -308,20 +355,20 @@ function updateStressTest() {
   const rate = Number($("#rateRange").value);
   const inflation = Number($("#inflationRange").value);
   const pressure = unemployment * 0.52 + rate / 540 + inflation * 0.12;
-  const delinquency = 4.1 + pressure * 0.69;
-  const loss = 1.08 * (1 + pressure * 0.14);
-  const raroc = Math.max(8.2, 18.7 - pressure * 1.7);
+  const delinquency = stressBaseline.delinquency + pressure * 0.69;
+  const loss = stressBaseline.expectedLossBn * (1 + pressure * 0.14);
+  const raroc = Math.max(8.2, stressBaseline.raroc - pressure * 1.7);
   const appetite = Math.min(100, Math.round(48 + pressure * 16));
 
   $("#unemploymentOutput").textContent = `+${unemployment.toFixed(1)} pp`;
   $("#rateOutput").textContent = `+${rate} pb`;
   $("#inflationOutput").textContent = `+${inflation.toFixed(1)} pp`;
   $("#stressDelinquency").textContent = `${delinquency.toFixed(2)}%`;
-  $("#stressDelinquencyDelta").textContent = `+${Math.round((delinquency - 4.1) * 100)} pb`;
+  $("#stressDelinquencyDelta").textContent = `+${Math.round((delinquency - stressBaseline.delinquency) * 100)} pb`;
   $("#stressLoss").textContent = `RD$${loss.toFixed(2)}B`;
-  $("#stressLossDelta").textContent = `+${((loss / 1.08 - 1) * 100).toFixed(1)}%`;
+  $("#stressLossDelta").textContent = `+${((loss / stressBaseline.expectedLossBn - 1) * 100).toFixed(1)}%`;
   $("#stressRaroc").textContent = `${raroc.toFixed(1)}%`;
-  $("#stressRarocDelta").textContent = `${(raroc - 18.7).toFixed(1)} pp`;
+  $("#stressRarocDelta").textContent = `${(raroc - stressBaseline.raroc).toFixed(1)} pp`;
   $("#appetiteValue").textContent = `${appetite}%`;
   $("#appetiteBar").style.width = `${appetite}%`;
 
@@ -391,11 +438,22 @@ function showToast(message) {
   toastTimer = setTimeout(() => toast.classList.remove("visible"), 2600);
 }
 
-renderAlerts();
-renderSegments();
-renderStrategies();
-renderLineChart();
-updateStressTest();
+async function initializeDashboard() {
+  try {
+    await loadMonitoringSnapshot();
+  } catch (error) {
+    console.warn("Using embedded contingency snapshot.", error);
+    $("#sourceLabel").textContent = "Contingencia local · revisar carga";
+  }
+
+  renderAlerts();
+  renderSegments();
+  renderStrategies();
+  renderLineChart();
+  updateScenario("base");
+}
+
+initializeDashboard();
 
 $("#scenarioSelect").addEventListener("change", (event) => updateScenario(event.target.value));
 $("#exportButton").addEventListener("click", exportMis);
@@ -412,7 +470,7 @@ $("#methodButton").addEventListener("click", () =>
         <li>Concentración: producto, empleador, zona y perfil.</li>
         <li>Resiliencia: sensibilidad bajo escenarios macroeconómicos.</li>
       </ul>
-      <p>Las ponderaciones y umbrales son demostrativos. En producción se calibran con historia interna, apetito de riesgo y validación independiente.</p>
+      <p>Las ponderaciones y umbrales se administran como parámetros versionados. Su activación requiere calibración con historia interna, alineación con el apetito de riesgo y validación independiente.</p>
     `,
   }),
 );

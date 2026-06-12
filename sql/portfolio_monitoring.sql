@@ -2,9 +2,9 @@
 Radar Persona 360
 Consultas de referencia para monitoreo mensual de riesgo persona.
 
-Supuestos:
+Condiciones de implementación:
 - SQL estilo ANSI; adaptar funciones de fecha al motor institucional.
-- Las tablas y datos son ilustrativos.
+- Sustituir los nombres de tablas por vistas homologadas del mart de riesgo.
 - Los umbrales deben gobernarse mediante tablas de parámetros.
 */
 

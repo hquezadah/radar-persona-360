@@ -1,0 +1,40 @@
+{
+  "contract_version": "1.0.0",
+  "effective_from": "2026-05-31",
+  "approval_status": "pending_institutional_validation",
+  "rules": [
+    {
+      "rule_id": "HIGH_REVOLVING_UTILIZATION",
+      "version": 1,
+      "severity": "critical",
+      "conditions": {
+        "utilization_gte": 0.85,
+        "payment_ratio_lt": 0.08,
+        "pd_12m_gte": 0.05,
+        "consecutive_cycles_gte": 2
+      },
+      "owner": "Riesgo + Tarjetas",
+      "sla_hours": 24
+    },
+    {
+      "rule_id": "ROLL_RATE_THRESHOLD",
+      "version": 1,
+      "severity": "critical",
+      "conditions": {
+        "roll_rate_0_30_gte": 0.038
+      },
+      "owner": "Políticas + Negocio",
+      "sla_hours": 24
+    },
+    {
+      "rule_id": "RAROC_BELOW_HURDLE",
+      "version": 1,
+      "severity": "preventive",
+      "conditions": {
+        "raroc_lt": 0.13
+      },
+      "owner": "Portafolio + Finanzas",
+      "sla_hours": 72
+    }
+  ]
+}

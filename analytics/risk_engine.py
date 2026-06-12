@@ -1,7 +1,7 @@
-"""Motor demostrativo de métricas para un portafolio de crédito persona.
+"""Motor de métricas para monitoreo de un portafolio de crédito persona.
 
-Los datos y coeficientes son sintéticos. El módulo prioriza trazabilidad:
-cada salida puede explicarse desde variables, reglas y supuestos explícitos.
+El módulo prioriza trazabilidad: cada salida puede explicarse desde variables,
+reglas, parámetros versionados y supuestos explícitos.
 """
 
 from __future__ import annotations
@@ -162,7 +162,7 @@ def generate_alerts(segment: Segment) -> list[dict[str, str]]:
             {
                 "severity": "preventive",
                 "rule": "raroc_below_hurdle",
-                "message": "RAROC por debajo del hurdle demostrativo de 13%.",
+                "message": "RAROC por debajo del hurdle parametrizado de 13%.",
                 "action": "Revisar precio, límite, costo de riesgo o estrategia.",
             }
         )

@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "contract_version": "1.0.0",
+    "as_of_date": "2026-05-31",
+    "processed_at": "2026-06-12T12:19:24+00:00",
+    "environment": "PREPRODUCTION",
+    "source": "REFERENCE_FIXTURE",
+    "reconciliation_status": "PENDING",
+    "run_id": "405837b742896471",
+    "source_sha256": "405837b742896471ab0c860b646fc24473884f4fb77176e303006de950d75ecb"
+  },
+  "portfolio": {
+    "exposure_mm": 28400.0,
+    "customers": 353574,
+    "weighted_pd_12m": 0.042071,
+    "weighted_delinquency_30": 0.043318,
+    "expected_loss_mm": 610.27,
+    "raroc": 0.258382,
+    "health_score": 79,
+    "exposure_display": "RD$28.4B",
+    "delinquency_display": "4.33%",
+    "expected_loss_display": "RD$0.61B",
+    "raroc_display": "25.8%"
+  },
+  "segments": [
+    {
+      "initials": "NP",
+      "name": "Nómina Prime",
+      "detail": "Relación > 24 meses",
+      "exposure": "RD$8.9B",
+      "customers": "92,410",
+      "delinquency": "1.82%",
+      "pd": "1.46%",
+      "raroc": "29.0%",
+      "signal": "Crecimiento",
+      "className": "growth"
+    },
+    {
+      "initials": "NJ",
+      "name": "Nómina Joven",
+      "detail": "Relación 0-12 meses",
+      "exposure": "RD$4.2B",
+      "customers": "71,208",
+      "delinquency": "5.76%",
+      "pd": "5.18%",
+      "raroc": "24.3%",
+      "signal": "Vigilancia",
+      "className": "watch"
+    },
+    {
+      "initials": "RV",
+      "name": "Revolvente Intensivo",
+      "detail": "Utilización > 70%",
+      "exposure": "RD$3.6B",
+      "customers": "48,905",
+      "delinquency": "7.41%",
+      "pd": "7.92%",
+      "raroc": "31.2%",
+      "signal": "Vigilancia",
+      "className": "watch"
+    },
+    {
+      "initials": "PP",
+      "name": "Profesionales",
+      "detail": "Ingreso independiente",
+      "exposure": "RD$5.1B",
+      "customers": "39,117",
+      "delinquency": "3.12%",
+      "pd": "2.88%",
+      "raroc": "30.1%",
+      "signal": "Crecimiento",
+      "className": "growth"
+    },
+    {
+      "initials": "CO",
+      "name": "Consumo Tradicional",
+      "detail": "Préstamo amortizable",
+      "exposure": "RD$4.8B",
+      "customers": "83,640",
+      "delinquency": "4.36%",
+      "pd": "4.04%",
+      "raroc": "25.6%",
+      "signal": "Estable",
+      "className": "stable"
+    },
+    {
+      "initials": "RF",
+      "name": "Refinanciados",
+      "detail": "Acuerdo vigente",
+      "exposure": "RD$1.8B",
+      "customers": "18,294",
+      "delinquency": "10.62%",
+      "pd": "12.30%",
+      "raroc": "7.6%",
+      "signal": "Vigilancia",
+      "className": "watch"
+    }
+  ]
+}

@@ -1,62 +1,75 @@
 # Radar Persona 360
 
-**Cockpit ejecutivo de monitoreo de riesgo crediticio minorista**
+**Plataforma de monitoreo y decisión para riesgo crediticio de personas**
 
-Proyecto de portafolio diseñado para demostrar cómo transformar señales de
-comportamiento, exposición, pérdida esperada y rentabilidad en decisiones
-accionables para una cartera de clientes personas.
+Radar Persona 360 integra calidad de cartera, señales tempranas, exposición,
+pérdida esperada y rentabilidad ajustada por riesgo en un ciclo operativo:
+detectar, priorizar, asignar, ejecutar y medir.
 
-[**Abrir demo ejecutiva**](https://hquezadah.github.io/radar-persona-360/) ·
-[Brief ejecutivo](docs/EXECUTIVE_BRIEF.md) ·
-[Guion para la VP](docs/INTERVIEW_DEMO.md)
+[**Abrir sala de control**](https://hquezadah.github.io/radar-persona-360/) ·
+[Mandato ejecutivo](docs/EXECUTIVE_BRIEF.md) ·
+[Arquitectura objetivo](docs/TARGET_ARCHITECTURE.md) ·
+[Plan de implementación](docs/DELIVERY_PLAN.md)
 
-> Caso demostrativo. Todos los datos, clientes, reglas, coeficientes e impactos
-> son sintéticos. El proyecto no contiene información confidencial ni representa
-> la metodología de una entidad financiera.
+> La instancia pública opera en preproducción con una carga de referencia
+> controlada. No contiene datos personales, información institucional,
+> credenciales ni parámetros confidenciales. La operación interna se habilita
+> conectando las vistas homologadas y completando los controles de salida
+> descritos en este repositorio.
 
-![Vista ejecutiva de Radar Persona 360](docs/dashboard-preview.jpg)
+![Sala de control de Radar Persona 360](docs/dashboard-preview.jpg)
 
-## Qué resuelve
+## Objetivo operativo
 
-Una VP de Riesgo no necesita otro tablero que describa el pasado. Necesita una
-vista que permita responder:
+La plataforma responde diariamente cinco preguntas:
 
-- dónde se está formando el próximo deterioro;
-- cuánto riesgo y rentabilidad están comprometidos;
-- qué acción focalizada debe ejecutarse;
-- quién es responsable y cómo se medirá el resultado.
-
-Radar Persona 360 conecta esas preguntas en un ciclo de gestión:
+1. ¿Dónde se está formando el próximo deterioro?
+2. ¿Qué exposición y rentabilidad están comprometidas?
+3. ¿Qué acción corresponde según el perfil y el apetito?
+4. ¿Quién debe ejecutarla y dentro de qué SLA?
+5. ¿Qué resultado produjo la decisión a 30, 60 y 90 días?
 
 ```mermaid
 flowchart LR
-    A[Datos de comportamiento] --> B[Segmentación y métricas]
-    B --> C[Alertas tempranas]
-    C --> D[Priorización por riesgo-retorno]
-    D --> E[Acción comercial o preventiva]
-    E --> F[Resultado y aprendizaje]
-    F --> B
+    A["Fuentes homologadas"] --> B["Mart de monitoreo"]
+    B --> C["Métricas y alertas"]
+    C --> D["Priorización riesgo-retorno"]
+    D --> E["Colas de gestión"]
+    E --> F["Resultado y aprendizaje"]
+    F --> C
 ```
 
-## Capacidades demostradas
+## Alcance funcional
 
-- **Monitoreo ejecutivo:** exposición, mora 30+, pérdida esperada, RAROC y
-  salud del portafolio.
-- **Segmentación:** lectura diferenciada de crecimiento, estabilidad y
-  vigilancia.
-- **Alertas explicables:** condición, exposición, acción sugerida, dueño y
-  regla.
-- **Estrés interactivo:** sensibilidad a desempleo, tasa activa e inflación.
-- **Gestión de ciclo de vida:** acciones para nómina joven, revolventes,
-  refinanciados y perfiles prime.
-- **Rentabilidad ajustada por riesgo:** priorización sin restricción
-  generalizada.
-- **Gobierno:** trazabilidad, champion/challenger, validación y límites de uso.
-- **MIS exportable:** descarga en CSV desde el dashboard.
+- **Monitoreo ejecutivo:** exposición, mora, roll rates, cosechas, pérdida
+  esperada, concentración y RAROC.
+- **Segmentación:** perfiles de crecimiento, estabilidad, vigilancia y
+  contención.
+- **Alertas tempranas:** razón, severidad, exposición, acción, responsable,
+  versión y SLA.
+- **Estrés:** sensibilidad por escenario macroeconómico y consumo de apetito.
+- **Ciclo de vida:** originación, mantenimiento de límites, cross-sell,
+  refinanciamiento y cobranza temprana.
+- **Gestión de estrategia:** champion/challenger, grupo de control y medición de
+  pérdida evitada.
+- **MIS:** salida reproducible para comités, Finanzas, Riesgo y Negocio.
 
-## Demo local
+## Estado de implementación
 
-Requiere Node.js 20 o superior. No instala paquetes ni usa servicios externos.
+| Componente | Estado | Condición de salida |
+| --- | --- | --- |
+| Sala de control web | Construido | UAT con usuarios de Riesgo |
+| Motor de EL, RAROC y estrés | Construido | Calibración institucional |
+| Reglas de alerta | Parametrizables | Backtesting y aprobación |
+| Consulta de mart | Definida | Mapeo a vistas homologadas |
+| Contrato de datos | Definido | Aprobación de Data Owner |
+| Gobierno y bitácora | Definido | Integración con flujo operativo |
+| Despliegue interno | Pendiente | Infraestructura y seguridad |
+
+## Ejecución local
+
+Requiere Node.js 20 o superior y Python 3.11 o superior. No instala paquetes ni
+utiliza servicios externos.
 
 ```bash
 npm run dev
@@ -64,13 +77,13 @@ npm run dev
 
 Abre [http://localhost:4173](http://localhost:4173).
 
-Para ejecutar todas las validaciones:
+Validación completa:
 
 ```bash
 npm run check
 ```
 
-Para consultar el motor analítico:
+Motor analítico por escenario:
 
 ```bash
 python3 analytics/risk_engine.py --scenario base
@@ -78,69 +91,74 @@ python3 analytics/risk_engine.py --scenario moderate
 python3 analytics/risk_engine.py --scenario severe
 ```
 
-## Arquitectura
+Construcción de un snapshot desde un extracto segmentado:
+
+```bash
+python3 -m pipeline.build_snapshot \
+  --input data/reference/segment_snapshot.csv \
+  --output data/monitoring_snapshot.json \
+  --as-of 2026-05-31
+```
+
+## Arquitectura del repositorio
 
 ```text
 .
-├── index.html                    # Cockpit ejecutivo
-├── styles.css                    # Sistema visual responsive
-├── app.js                        # Interacciones, escenarios y MIS
+├── index.html                     # Sala de control
+├── styles.css                     # Sistema visual responsive
+├── app.js                         # Escenarios, alertas, filtros y MIS
 ├── analytics/
-│   └── risk_engine.py            # EL, RAROC, estrés y alertas
+│   └── risk_engine.py             # EL, RAROC, estrés y reglas
+├── pipeline/
+│   └── build_snapshot.py          # Validación y publicación del corte
+├── data/reference/
+│   └── segment_snapshot.csv       # Fixture controlado para CI
+├── schemas/
+│   └── monitoring_snapshot.schema.json
 ├── sql/
-│   └── portfolio_monitoring.sql  # Mart, KPIs y reglas de monitoreo
-├── tests/                        # Pruebas Node y Python
-├── docs/
-│   ├── EXECUTIVE_BRIEF.md        # Caso de negocio y piloto de 90 días
-│   ├── MODEL_GOVERNANCE.md       # Gobierno y validación
-│   └── INTERVIEW_DEMO.md         # Guion de presentación para la VP
-└── .github/workflows/pages.yml   # Validación y despliegue en GitHub Pages
+│   └── portfolio_monitoring.sql   # Mart y agregaciones
+├── config/
+│   └── alert_rules.json           # Umbrales versionados
+├── docs/                          # Arquitectura, gobierno y operación
+└── .github/workflows/pages.yml    # Validación de la instancia pública
 ```
+
+## Controles de producción
+
+- reconciliación contra saldos contables y MIS oficial;
+- pruebas de completitud, unicidad, vigencia y estabilidad;
+- segregación entre desarrollo, validación y aprobación;
+- trazabilidad de regla, decisión, excepción y resultado;
+- cifrado, mínimo privilegio y ausencia de PII en logs;
+- rollback de parámetros y despliegues;
+- monitoreo de falsos positivos, cura, RAROC y experiencia del cliente.
+
+Los criterios completos están en
+[Gobierno analítico](docs/MODEL_GOVERNANCE.md) y
+[Contrato de datos](docs/DATA_CONTRACT.md).
 
 ## Métricas
 
-La demo distingue cuatro familias:
-
-| Familia | Ejemplos | Decisión |
-| --- | --- | --- |
-| Calidad | mora, roll rate, cosechas, curas | intervenir u observar |
-| Pérdida | PD, LGD, EAD, EL | cobertura y apetito |
-| Rentabilidad | margen, costo de riesgo, RAROC | crecer, repricing o contener |
-| Concentración | producto, empleador, segmento | límites y diversificación |
-
-El motor Python implementa cálculos trazables:
-
 ```text
 EL 12M = EAD × PD × LGD
-RAROC simplificado = (margen neto - EL 12M) / capital económico
+RAROC = (margen neto - pérdida esperada - costos atribuibles) / capital económico
 ```
 
-Los coeficientes de estrés son deliberadamente transparentes para que puedan
-ser sustituidos por elasticidades calibradas y validadas.
+Las fórmulas finales deben usar definiciones institucionales homologadas. Los
+umbrales se administran fuera del código, con versionado, vigencia, aprobador y
+evidencia de validación.
 
-## Propuesta de piloto
+## Despliegue
 
-1. **Días 1-30:** reconciliar fuentes, definir métricas, parametrizar apetito y
-   ejecutar backtesting.
-2. **Días 31-60:** desplegar dos casos de uso con champion/challenger.
-3. **Días 61-90:** medir pérdida evitada, rentabilidad, cura y experiencia del
-   cliente; decidir escalamiento.
+La instancia pública valida experiencia de usuario y automatización. El destino
+operativo recomendado es una red privada con autenticación corporativa, API de
+solo lectura sobre el mart y bitácora de decisiones en una base transaccional.
 
-La historia completa está en el
-[brief ejecutivo](docs/EXECUTIVE_BRIEF.md) y el
-[guion de demostración](docs/INTERVIEW_DEMO.md).
+Consulta [Arquitectura objetivo](docs/TARGET_ARCHITECTURE.md) y
+[Plan de implementación](docs/DELIVERY_PLAN.md).
 
-## Diseño responsable
+## Propiedad
 
-- Sin datos personales ni información real.
-- Separación explícita entre dato observado, estimación y escenario.
-- Alertas explicables y versionables.
-- Ninguna acción adversa automática propuesta.
-- Validación independiente antes de cualquier uso productivo.
+**Unidad responsable:** Monitoreo de Riesgo Persona
 
-Consulta [gobierno analítico](docs/MODEL_GOVERNANCE.md) para el marco completo.
-
-## Autor
-
-**Hector Quezada**  
-Proyecto de candidatura · Gerencia de Monitoreo de Riesgos Persona · 2026
+**Interesados:** Riesgo, Negocio, Cobranzas, Finanzas, Modelos, Datos y Tecnología

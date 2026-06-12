@@ -1,69 +1,84 @@
-# Brief ejecutivo: Radar Persona 360
+# Mandato ejecutivo: Radar Persona 360
 
-## Decisión que habilita
+## Propósito
 
-Radar Persona 360 responde diariamente tres preguntas:
+Establecer una capacidad diaria de monitoreo y decisión para el portafolio de
+personas, conectando señales tempranas con exposición, rentabilidad, apetito de
+riesgo y acciones medibles.
 
-1. ¿Dónde se está formando el próximo deterioro?
-2. ¿Qué exposición y rentabilidad están en juego?
-3. ¿Qué acción conviene ejecutar, quién debe liderarla y cómo se medirá?
+La plataforma evita dos respuestas tardías o costosas:
 
-La propuesta evita dos extremos: reaccionar cuando la mora ya se materializó o
-restringir de manera generalizada un portafolio que todavía contiene segmentos
-rentables y sanos.
+- reaccionar cuando la mora ya se materializó;
+- restringir de forma generalizada segmentos que conservan capacidad de pago y
+  rentabilidad.
 
-## Hallazgo demostrativo
+## Decisiones habilitadas
 
-En el escenario base sintético, Nómina Joven y Revolvente Intensivo explican la
-mayor presión marginal de pérdida esperada. A la vez, Nómina Prime y
-Profesionales mantienen RAROC superior al hurdle y capacidad para crecimiento
-selectivo.
+- mantener, reducir o graduar límites por perfil;
+- activar contacto preventivo antes del primer atraso;
+- priorizar consolidación, refinanciamiento o cobranza temprana;
+- seleccionar poblaciones para cross-sell y up-sell responsable;
+- revisar concentraciones por producto, empleador, zona o cohorte;
+- anticipar consumo de apetito bajo escenarios de estrés;
+- medir pérdida evitada e ingreso incremental con grupo de control.
 
-La recomendación no es frenar el portafolio. Es:
+## Lectura del corte
 
-- intervenir temprano en clientes revolventes con pago mínimo recurrente;
-- graduar los límites iniciales de Nómina Joven con señales de 90 días;
-- crecer en perfiles prime con capacidad residual verificada;
-- recalibrar la estrategia de refinanciados según cura por cohorte.
+La sala de control presenta una carga de referencia mientras se completa la
+homologación de fuentes. En operación, cada afirmación ejecutiva deberá estar
+respaldada por:
 
-## Impacto esperado del piloto
+1. fecha de corte y fuente;
+2. definición institucional de la métrica;
+3. reconciliación contra el MIS oficial;
+4. regla y versión aplicadas;
+5. población afectada y responsable;
+6. resultado observado a 30, 60 y 90 días.
 
-| Resultado | Meta demostrativa |
-| --- | ---: |
-| Pérdida evitada | RD$92 MM |
-| Ingreso incremental | RD$96 MM |
-| Mejora mora 30+ en cosechas objetivo | 48 pb |
-| Tiempo de actualización | 24 horas |
-| Trazabilidad de reglas | 100% |
+## Casos de uso iniciales
 
-Estas cifras son hipótesis para diseñar el piloto. Deben sustituirse por
-estimaciones calibradas con historia interna, grupos de control y aprobación de
-las instancias de gobierno correspondientes.
+### Intervención temprana en revolventes
 
-## Piloto de 90 días
+Detectar utilización persistentemente alta, pago mínimo recurrente, deterioro
+de PD y señales de endeudamiento externo. La acción se asigna según capacidad
+residual y elegibilidad: contacto, consolidación, mantenimiento o reducción
+selectiva de línea.
 
-**Días 1-30: base y gobierno**
+### Límites graduados para relaciones nuevas
 
-- acordar definiciones únicas de exposición, mora, PD, pérdida y RAROC;
-- reconciliar fuentes con Finanzas, Riesgo, Cobranzas y Negocio;
-- parametrizar apetito, umbrales, responsables y SLA;
-- ejecutar backtesting de reglas.
+Usar comportamiento de los primeros 90 días para confirmar capacidad de pago,
+graduar exposición y controlar deterioro de cosechas sin cerrar crecimiento.
 
-**Días 31-60: prueba controlada**
+### Crecimiento en perfiles rentables
 
-- seleccionar dos casos de uso de alto valor;
-- implementar champion/challenger;
-- desplegar tablero y bitácora de decisiones;
-- monitorear discriminación, estabilidad, contacto y cura.
+Identificar clientes con estabilidad, capacidad residual y RAROC sobre hurdle.
+La decisión comercial se ejecuta con límites consistentes con apetito y
+propensión.
 
-**Días 61-90: decisión de escala**
+## Indicadores de éxito
 
-- cuantificar pérdida evitada e ingreso incremental;
-- revisar experiencia de cliente y riesgo operacional;
-- ajustar umbrales y procesos;
-- presentar recomendación de escalamiento al comité.
+| Dimensión | Indicador |
+| --- | --- |
+| Riesgo | mora incremental, roll rate, pérdida esperada y cura |
+| Rentabilidad | RAROC, margen neto e ingreso incremental |
+| Ejecución | contacto, aceptación, SLA y cobertura |
+| Cliente | reclamos, retención y proporcionalidad de acción |
+| Modelo | estabilidad, calibración, falsos positivos y drift |
+| Control | reconciliación, excepciones y reglas versionadas |
 
-## Mensaje para la Vicepresidencia
+Las metas numéricas se fijan después del baseline homologado y del backtesting.
 
-La ventaja del enfoque no está en producir más reportes. Está en crear un ciclo
-de decisión medible: señal, priorización, acción, resultado y aprendizaje.
+## Cadencia de gestión
+
+- **Diaria:** calidad de carga, alertas críticas y SLA.
+- **Semanal:** segmentos, acciones, excepciones y resultados tempranos.
+- **Mensual:** apetito, pérdida, RAROC, concentración y estabilidad.
+- **Trimestral:** recalibración, champion/challenger y priorización de roadmap.
+
+## Decisiones requeridas del comité
+
+1. designar Data Owner y Product Owner;
+2. aprobar casos de uso iniciales y variables permitidas;
+3. confirmar definiciones de EL, RAROC y apetito;
+4. autorizar backtesting y UAT;
+5. definir el foro que aprobará reglas y cambios de parámetros.

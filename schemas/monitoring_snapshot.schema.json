@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://internal.example/radar-persona/monitoring_snapshot.schema.json",
+  "title": "Radar Persona 360 monitoring snapshot",
+  "type": "object",
+  "required": ["metadata", "portfolio", "segments"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": [
+        "contract_version",
+        "as_of_date",
+        "processed_at",
+        "environment",
+        "source",
+        "reconciliation_status",
+        "run_id"
+      ]
+    },
+    "portfolio": {
+      "type": "object",
+      "required": [
+        "exposure_mm",
+        "customers",
+        "weighted_pd_12m",
+        "weighted_delinquency_30",
+        "expected_loss_mm",
+        "raroc",
+        "health_score"
+      ]
+    },
+    "segments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "code",
+          "exposure_mm",
+          "customers",
+          "pd_12m",
+          "delinquency_30",
+          "raroc",
+          "signal"
+        ]
+      }
+    }
+  }
+}

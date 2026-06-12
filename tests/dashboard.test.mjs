@@ -11,9 +11,10 @@ test("dashboard contains the core executive sections", () => {
   }
 });
 
-test("synthetic-data disclaimer is visible", () => {
-  assert.match(html, /Datos 100% sintéticos/);
-  assert.match(html, /No representa información real/);
+test("preproduction data status is visible", () => {
+  assert.match(html, /Preproducción/);
+  assert.match(html, /Datos de referencia hasta homologación de fuentes/);
+  assert.match(html, /Monitoreo Riesgo Persona/);
 });
 
 test("interactive controls have corresponding logic", () => {

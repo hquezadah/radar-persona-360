@@ -278,6 +278,14 @@ main {
   align-items: center;
 }
 
+.as-of-date {
+  color: var(--ink-500);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
 .select-control {
   display: flex;
   gap: 8px;
@@ -1478,6 +1486,10 @@ dialog ul {
   }
 
   .select-control {
+    display: none;
+  }
+
+  .as-of-date {
     display: none;
   }
 

@@ -1,0 +1,7 @@
+segment_name,segment_code,detail,exposure_mm,customers,pd_12m,lgd,ead_factor,delinquency_30,annual_net_margin_mm,economic_capital_mm,utilization,roll_rate_0_30,signal
+Nómina Prime,NP,Relación > 24 meses,8900,92410,0.0146,0.43,0.95,0.0182,610,1920,0.32,0.017,growth
+Nómina Joven,NJ,Relación 0-12 meses,4200,71208,0.0518,0.48,0.96,0.0576,375,1130,0.61,0.041,watch
+Revolvente Intensivo,RV,Utilización > 70%,3600,48905,0.0792,0.58,1.08,0.0741,640,1480,0.88,0.052,watch
+Profesionales,PP,Ingreso independiente,5100,39117,0.0288,0.45,0.94,0.0312,460,1320,0.47,0.026,growth
+Consumo Tradicional,CO,Préstamo amortizable,4800,83640,0.0404,0.47,0.92,0.0436,470,1510,0.42,0.031,stable
+Refinanciados,RF,Acuerdo vigente,1800,18294,0.1230,0.61,0.98,0.1062,205,960,0.55,0.067,watch
