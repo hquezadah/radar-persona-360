@@ -1,0 +1,13 @@
+{
+  "name": "radar-persona-360",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cockpit ejecutivo de monitoreo de riesgo crediticio minorista con datos sintéticos.",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "check": "node --check app.js && node --test tests/dashboard.test.mjs && python3 -m unittest tests/test_risk_engine.py"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Radar Persona 360: demo ejecutiva de monitoreo de riesgo crediticio minorista."
+    />
+    <title>Radar Persona 360 | Riesgo Crediticio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Navegación principal">
+        <a class="brand" href="#resumen" aria-label="Radar Persona 360, inicio">
+          <span class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+          <span>
+            <strong>Radar</strong>
+            <small>Persona 360</small>
+          </span>
+        </a>
+
+        <nav class="main-nav">
+          <a class="nav-link active" href="#resumen" data-section="resumen">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6v-9h-6v9Zm0-16v5h6V4h-6Z"/></svg>
+            Resumen
+          </a>
+          <a class="nav-link" href="#alertas" data-section="alertas">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a7 7 0 0 0-7 7v4l-2 3h18l-2-3v-4a7 7 0 0 0-7-7Zm0 19a3 3 0 0 0 2.8-2h-5.6A3 3 0 0 0 12 22Z"/></svg>
+            Alertas
+            <span class="nav-badge">8</span>
+          </a>
+          <a class="nav-link" href="#segmentos" data-section="segmentos">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM8 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8 0c-3.3 0-6 1.8-6 4v3h12v-3c0-2.2-2.7-4-6-4ZM8 15c-3.3 0-6 1.8-6 4v1h6v-3c0-.7.2-1.4.6-2H8Z"/></svg>
+            Segmentos
+          </a>
+          <a class="nav-link" href="#estres" data-section="estres">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v2H3v-2Zm2-3 4-4 3 3 6-7 2 2-8 9-3-3-2 2-2-2Z"/></svg>
+            Estrés
+          </a>
+          <a class="nav-link" href="#estrategia" data-section="estrategia">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>
+            Estrategia
+          </a>
+        </nav>
+
+        <div class="sidebar-note">
+          <span class="status-dot"></span>
+          <div>
+            <strong>Demo ejecutiva</strong>
+            <small>Datos 100% sintéticos</small>
+          </div>
+        </div>
+
+        <div class="profile">
+          <div class="avatar">HQ</div>
+          <div>
+            <strong>Hector Quezada</strong>
+            <small>Candidato · Riesgo Persona</small>
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Sala de control · Portafolio minorista</p>
+            <h1>Radar Persona 360</h1>
+          </div>
+          <div class="topbar-actions">
+            <label class="select-control">
+              <span>Escenario</span>
+              <select id="scenarioSelect" aria-label="Seleccionar escenario">
+                <option value="base">Base 2026</option>
+                <option value="moderate">Estrés moderado</option>
+                <option value="severe">Estrés severo</option>
+              </select>
+            </label>
+            <button class="button button-secondary" id="exportButton" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10l3-3 1.4 1.4L12 16.8l-5.4-5.4L8 10l3 3V3ZM4 19h16v2H4v-2Z"/></svg>
+              Exportar MIS
+            </button>
+          </div>
+        </header>
+
+        <div class="content">
+          <section class="hero panel" id="resumen">
+            <div class="hero-copy">
+              <span class="pill pill-positive">Portafolio estable · vigilancia selectiva</span>
+              <h2>La mora está contenida, pero el deterioro temprano se concentra en dos segmentos.</h2>
+              <p>
+                Nómina joven y revolventes de alta utilización explican el 61% del incremento
+                proyectado en pérdida esperada. La acción recomendada protege
+                <strong id="heroProtection">RD$184 MM</strong> en exposición.
+              </p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#estrategia">Ver plan de acción</a>
+                <button class="text-button" id="methodButton" type="button">Cómo se calcula</button>
+              </div>
+            </div>
+            <div class="hero-score">
+              <div class="score-ring" id="healthRing">
+                <div>
+                  <strong id="healthScore">82</strong>
+                  <span>/ 100</span>
+                </div>
+              </div>
+              <p>Salud del portafolio</p>
+              <small id="healthDelta">+3 pts vs. dic-25</small>
+            </div>
+          </section>
+
+          <section class="kpi-grid" aria-label="Indicadores clave">
+            <article class="kpi-card">
+              <div class="kpi-heading">
+                <span>Exposición total</span>
+                <span class="kpi-icon neutral">RD$</span>
+              </div>
+              <strong id="exposureKpi">RD$28.4B</strong>
+              <div class="kpi-foot"><span class="trend up">↑ 6.2%</span> vs. dic-25</div>
+            </article>
+            <article class="kpi-card">
+              <div class="kpi-heading">
+                <span>Mora 30+</span>
+                <span class="kpi-icon warning">30</span>
+              </div>
+              <strong id="delinquencyKpi">4.10%</strong>
+              <div class="kpi-foot"><span class="trend down">↓ 18 pb</span> vs. dic-25</div>
+            </article>
+            <article class="kpi-card">
+              <div class="kpi-heading">
+                <span>Pérdida esperada</span>
+                <span class="kpi-icon danger">EL</span>
+              </div>
+              <strong id="expectedLossKpi">RD$1.08B</strong>
+              <div class="kpi-foot"><span class="trend warning">↑ 7.4%</span> presión selectiva</div>
+            </article>
+            <article class="kpi-card">
+              <div class="kpi-heading">
+                <span>RAROC</span>
+                <span class="kpi-icon positive">%</span>
+              </div>
+              <strong id="rarocKpi">18.7%</strong>
+              <div class="kpi-foot"><span class="trend up">+2.2 pp</span> sobre hurdle</div>
+            </article>
+          </section>
+
+          <section class="dashboard-grid">
+            <article class="panel chart-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Señal adelantada</p>
+                  <h3>Roll rate 0 → 30 días</h3>
+                </div>
+                <div class="period-tabs" role="group" aria-label="Periodo del gráfico">
+                  <button class="period-tab" data-period="6">6M</button>
+                  <button class="period-tab active" data-period="12">12M</button>
+                  <button class="period-tab" data-period="18">18M</button>
+                </div>
+              </div>
+              <div class="chart-legend">
+                <span><i class="legend-dot actual"></i>Portafolio</span>
+                <span><i class="legend-dot threshold"></i>Umbral</span>
+              </div>
+              <div class="line-chart" id="rollRateChart" role="img" aria-label="Evolución mensual del roll rate"></div>
+              <div class="chart-callout">
+                <strong>2.84%</strong>
+                <span>La señal mejora 24 pb desde el pico de marzo.</span>
+              </div>
+            </article>
+
+            <article class="panel mix-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Composición</p>
+                  <h3>Exposición por nivel de riesgo</h3>
+                </div>
+                <button class="icon-button" type="button" aria-label="Más información" data-tooltip="Distribución por banda de PD">i</button>
+              </div>
+              <div class="risk-mix">
+                <div class="donut" id="riskDonut">
+                  <div><strong>72%</strong><span>riesgo bajo</span></div>
+                </div>
+                <div class="mix-legend">
+                  <div><span><i class="risk-dot low"></i>Bajo</span><strong>72%</strong></div>
+                  <div><span><i class="risk-dot medium"></i>Medio</span><strong>19%</strong></div>
+                  <div><span><i class="risk-dot high"></i>Alto</span><strong>9%</strong></div>
+                </div>
+              </div>
+              <div class="mini-insight">
+                <span class="mini-icon">!</span>
+                <p><strong>RD$2.56B</strong> requieren seguimiento reforzado, no una restricción generalizada.</p>
+              </div>
+            </article>
+          </section>
+
+          <section class="panel alerts-panel" id="alertas">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Motor de alertas tempranas</p>
+                <h3>Señales que requieren decisión</h3>
+              </div>
+              <div class="alert-summary"><strong>3</strong> críticas · <strong>5</strong> preventivas</div>
+            </div>
+            <div class="alert-list" id="alertList"></div>
+          </section>
+
+          <section class="panel segment-panel" id="segmentos">
+            <div class="panel-heading table-heading">
+              <div>
+                <p class="eyebrow">Rentabilidad ajustada por riesgo</p>
+                <h3>Desempeño por segmento</h3>
+              </div>
+              <div class="segment-filters" role="group" aria-label="Filtrar segmentos">
+                <button class="filter-chip active" data-filter="all">Todos</button>
+                <button class="filter-chip" data-filter="watch">Vigilancia</button>
+                <button class="filter-chip" data-filter="growth">Crecimiento</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Segmento</th>
+                    <th>Exposición</th>
+                    <th>Clientes</th>
+                    <th>Mora 30+</th>
+                    <th>PD 12M</th>
+                    <th>RAROC</th>
+                    <th>Señal</th>
+                  </tr>
+                </thead>
+                <tbody id="segmentTable"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="stress-grid" id="estres">
+            <article class="panel stress-controls">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Simulador gerencial</p>
+                  <h3>Prueba de estrés</h3>
+                </div>
+                <span class="pill" id="stressLabel">Personalizado</span>
+              </div>
+              <p class="muted">Ajusta los supuestos macro y observa el impacto estimado sobre el portafolio.</p>
+              <label class="range-control">
+                <span><strong>Desempleo</strong><output id="unemploymentOutput">+1.2 pp</output></span>
+                <input id="unemploymentRange" type="range" min="0" max="4" step="0.1" value="1.2" />
+              </label>
+              <label class="range-control">
+                <span><strong>Tasa activa</strong><output id="rateOutput">+175 pb</output></span>
+                <input id="rateRange" type="range" min="0" max="500" step="25" value="175" />
+              </label>
+              <label class="range-control">
+                <span><strong>Inflación</strong><output id="inflationOutput">+2.0 pp</output></span>
+                <input id="inflationRange" type="range" min="0" max="6" step="0.1" value="2" />
+              </label>
+            </article>
+            <article class="panel stress-results">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Impacto estimado · 12 meses</p>
+                  <h3>Resultado del escenario</h3>
+                </div>
+              </div>
+              <div class="stress-metrics">
+                <div><span>Mora 30+</span><strong id="stressDelinquency">5.23%</strong><small id="stressDelinquencyDelta">+113 pb</small></div>
+                <div><span>Pérdida esperada</span><strong id="stressLoss">RD$1.31B</strong><small id="stressLossDelta">+21.3%</small></div>
+                <div><span>RAROC</span><strong id="stressRaroc">15.9%</strong><small id="stressRarocDelta">-2.8 pp</small></div>
+              </div>
+              <div class="stress-bar">
+                <span>Consumo de apetito de riesgo</span>
+                <div><i id="appetiteBar"></i></div>
+                <strong id="appetiteValue">74%</strong>
+              </div>
+              <p class="result-note" id="stressNarrative">El portafolio permanece dentro del apetito, con presión en revolventes y préstamos sin garantía.</p>
+            </article>
+          </section>
+
+          <section id="estrategia">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">De insight a ejecución</p>
+                <h2>Decisiones recomendadas para los próximos 90 días</h2>
+              </div>
+              <span class="decision-value">Impacto protegido estimado: <strong>RD$184 MM</strong></span>
+            </div>
+            <div class="strategy-grid" id="strategyGrid"></div>
+          </section>
+
+          <section class="closing panel">
+            <div>
+              <p class="eyebrow">Propuesta de valor</p>
+              <h2>Una gestión de riesgo que prioriza antes de restringir.</h2>
+              <p>La solución conecta señales de comportamiento, pérdida esperada y rentabilidad para decidir dónde crecer, dónde intervenir y dónde observar.</p>
+            </div>
+            <div class="closing-metrics">
+              <div><strong>24h</strong><span>actualización objetivo</span></div>
+              <div><strong>90 días</strong><span>piloto a producción</span></div>
+              <div><strong>100%</strong><span>trazabilidad de reglas</span></div>
+            </div>
+          </section>
+
+          <footer>
+            <p>Radar Persona 360 · Caso demostrativo con datos sintéticos · No representa información real de ninguna entidad.</p>
+            <p>Diseñado por Hector Quezada · Junio 2026</p>
+          </footer>
+        </div>
+      </main>
+    </div>
+
+    <dialog id="detailDialog">
+      <button class="dialog-close" id="dialogClose" type="button" aria-label="Cerrar">×</button>
+      <p class="eyebrow" id="dialogEyebrow">Metodología</p>
+      <h2 id="dialogTitle">Lógica del indicador</h2>
+      <div id="dialogBody"></div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
