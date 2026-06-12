@@ -6,6 +6,10 @@ Proyecto de portafolio diseñado para demostrar cómo transformar señales de
 comportamiento, exposición, pérdida esperada y rentabilidad en decisiones
 accionables para una cartera de clientes personas.
 
+[**Abrir demo ejecutiva**](https://hquezadah.github.io/radar-persona-360/) ·
+[Brief ejecutivo](docs/EXECUTIVE_BRIEF.md) ·
+[Guion para la VP](docs/INTERVIEW_DEMO.md)
+
 > Caso demostrativo. Todos los datos, clientes, reglas, coeficientes e impactos
 > son sintéticos. El proyecto no contiene información confidencial ni representa
 > la metodología de una entidad financiera.
